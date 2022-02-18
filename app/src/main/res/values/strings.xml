@@ -1,5 +1,5 @@
 <resources>
-    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyDwp-L1DpnqbTaBZKLAytqUbHJvaK2Gc_o</string>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">AIzaSyC9FAQX8SaqwhgYU9Cl63KLR6WPPMuympk</string>
     <string name="firebase_functions_base_url" templateMergeStrategy="preserve" translatable="false">https://firebase_functions_base_url/</string>
     <string name="publishablekey" templateMergeStrategy="preserve" translatable="false">stripe_pk_key</string>
     <string name="stripe_client_key" templateMergeStrategy="preserve" translatable="false">stripe_sk_key</string>
@@ -17,7 +17,7 @@
     <string name="confirm">Confirm</string>
     <string name="working">Working</string>
     <string name="destination">Destination</string>
-    <string name="picked_customer">Picked customer</string>
+    <string name="picked_customer">Start Trip</string>
     <string name="car">Car</string>
     <string name="balance">Balance</string>
     <string name="payout">Payout</string>
@@ -34,11 +34,11 @@
     <string name="logout">Logout</string>
     <string name="customer">Customer</string>
     <string name="driver">Driver</string>
-    <string name="getting_driver">Getting Your Driver ....</string>
-    <string name="looking_driver">Looking For Your Driver…</string>
-    <string name="driver_here">Driver Here</string>
-    <string name="driver_found">Driver Found</string>
-    <string name="drive_complete">Drive Completed</string>
+    <string name="getting_driver">Getting Your Trip ....</string>
+    <string name="looking_driver">Looking For Your Trip…</string>
+    <string name="driver_here">Trip Here</string>
+    <string name="driver_found">Trip Found</string>
+    <string name="drive_complete">Trip Completed</string>
     <string name="not_approved">Your Account Has Not Been Approved</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -257,7 +257,7 @@
     <string name="add_card">Add Card</string>
     <string name="current_location">Current Location</string>
     <string name="no_driver_found">Unfortunately, No drivers were found around you.</string>
-    <string name="no_drivers_around">No drivers around</string>
+    <string name="no_drivers_around">No Trips around</string>
     <string name="ride_in_progress">Ride In Progress</string>
     <string name="payout_amount">0 €</string>
     <string name="no_default_payment">No default payment available</string>

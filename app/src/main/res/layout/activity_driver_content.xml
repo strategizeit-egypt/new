@@ -56,10 +56,100 @@
             app:layout_behavior="@string/bottom_sheet_behavior"
             android:focusable="true">
 
-            <androidx.cardview.widget.CardView
+            <LinearLayout
+                android:id="@+id/location_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="bottom">
+                android:layout_margin="15sp"
+                android:clipToPadding="false"
+                android:orientation="vertical"
+                android:gravity="bottom">
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/place_from_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    app:cardBackgroundColor="@color/lighterGrey"
+                    app:cardCornerRadius="8dp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="true"
+                    >
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/tvPlaceFrom"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="20sp"
+                            android:layout_weight="1"
+                            android:drawableStart="@drawable/ic_circle"
+                            android:drawablePadding="10sp"
+                            android:drawableTint="@color/black"
+                            android:ellipsize="end"
+                            android:hint="@string/from"
+                            android:imeOptions="actionGo"
+                            android:maxLines="1"
+                            android:singleLine="true"
+                            tools:targetApi="m" />
+
+                        <com.google.android.material.floatingactionbutton.FloatingActionButton
+                            android:id="@+id/fbCurrentLocation"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:layout_marginEnd="10sp"
+                            android:backgroundTint="@color/white"
+                            android:elevation="0dp"
+                            android:src="@drawable/ic_location_on_grey_24dp"
+                            android:text="@string/phone_driver"
+                            android:textColor="@android:color/white"
+                            app:borderWidth="0dp"
+                            app:elevation="0dp"
+                            app:fabSize="mini" />
+                    </LinearLayout>
+
+
+                </androidx.cardview.widget.CardView>
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clipToPadding="false"
+                    app:cardBackgroundColor="@color/lighterGrey"
+                    app:cardCornerRadius="8sp"
+                    app:cardElevation="0dp"
+                    app:cardUseCompatPadding="true">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:id="@+id/tvPlaceTo"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="20sp"
+                        android:drawableStart="@drawable/ic_circle_filled"
+                        android:drawablePadding="10sp"
+                        android:drawableTint="@color/black"
+                        android:ellipsize="end"
+                        android:hint="@string/to"
+                        android:imeOptions="actionGo"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        tools:targetApi="m" />
+                </androidx.cardview.widget.CardView>
+            </LinearLayout>
+
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/clTrip"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:id="@+id/customerInfo"

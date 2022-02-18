@@ -53,9 +53,9 @@ public class CardRequestAdapter extends ArrayAdapter<RideObject>{
 
 
         if (card_item != null) {
-            mDistance.setText(card_item.getCalculatedRideDistance());
-            mTime.setText(card_item.getCalculatedTime() + " min");
-            mRatingText.setText(card_item.getCustomer().getRatingString() );
+            mDistance.setText("100 Km"/*card_item.getCalculatedRideDistance()*/);
+            mTime.setText("60 Min"/*card_item.getCalculatedTime() + " min"*/);
+            mRatingText.setText("5"/*card_item.getCustomer().getRatingString()*/ );
         }
 
 

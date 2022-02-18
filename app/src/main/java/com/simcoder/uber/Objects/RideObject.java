@@ -22,7 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
 import com.simcoder.uber.R;
-import com.simcoder.uber.Utils.SendNotification;
 import com.simcoder.uber.Utils.Utils;
 
 import java.util.Calendar;
@@ -245,7 +244,7 @@ public class RideObject  implements Cloneable{
 
         ref.updateChildren(map);
 
-        new SendNotification("Make sure to rate the driver and pay for the ride","ride ended", mCustomer.getNotificationKey());
+  //      new SendNotification("Make sure to rate the driver and pay for the ride","ride ended", mCustomer.getNotificationKey());
     }
 
     /**

@@ -1,41 +1,37 @@
-package com.simcoder.uber;
+package com.simcoder.uber
 
-import static android.content.Context.MODE_PRIVATE;
+import android.content.Context
+import com.google.gson.Gson
+import android.content.SharedPreferences
+import com.simcoder.uber.AppSharedRepository
 
-import android.content.Context;
-import android.content.SharedPreferences;
-import com.google.gson.Gson;
+class AppSharedRepository {
+    var TOKEN = "Token"
+    private val ACCEPT = "Accept"
+    private val LANGUAGE = "Language"
+    private val LANGUAGE_ID = "LanguageID"
+    private val STUDENT = "Student"
+    private val STUDENTS = "Students"
+    private val CHILDREN = "Children"
+    private val GRADES = "Grades"
+    private val SUBJECTS = "Subjects"
+    private val GRADE = "Grade"
+    private val PORTAL = "Portal"
+    private val TOKEN_EXPIRATION_TIME = "TokenTime"
+    private val gson = Gson()
 
-public class AppSharedRepository {
+    companion object {
+        var TERLIVE_APP = "TerliveApp"
+        var USER_TYPE = "UserType"
+        var USER = "User"
+        var DRIVER = "Driver"
 
-
-
-
-          static String TERLIVE_APP = "TerliveApp";
-          static String USER_TYPE = "UserType";
-          String TOKEN = "Token";
-        private  String ACCEPT ="Accept";
-        private  String LANGUAGE = "Language";
-        private  String LANGUAGE_ID ="LanguageID";
-         static String USER ="User";
-        static   String DRIVER ="Driver";
-        private  String STUDENT = "Student";
-        private  String STUDENTS = "Students";
-        private  String CHILDREN = "Children";
-        private  String GRADES ="Grades";
-        private  String SUBJECTS ="Subjects";
-        private  String GRADE ="Grade";
-        private  String PORTAL ="Portal";
-        private  String TOKEN_EXPIRATION_TIME = "TokenTime";
-
-        private Gson gson = new Gson();
-   /*     private String sharedPreferences by lazy {  MeshwarApplication.instance!!.getSharedPreferences(
+        /*     private String sharedPreferences by lazy {  MeshwarApplication.instance!!.getSharedPreferences(
                 TERLIVE_APP, MODE_PRIVATE)}
         private String prefsEditor: SharedPreferences.Editor by lazy {  sharedPreferences.edit()}
 
 */
-
-/*
+        /*
         static public getUser(context :Context): CustomerObject {
             String sharedPreferences by lazy {  context.getSharedPreferences(
                     TERLIVE_APP, MODE_PRIVATE)}
@@ -47,7 +43,7 @@ public class AppSharedRepository {
             String json = sharedPreferences.getString(DRIVER, null)
             return gson.fromJson(json, DriverObject::class.java)
         }*/
-/*
+        /*
 
     static public saveGrade(gradeUI: GradeUI?){
         prefsEditor.putString(GRADE, gradeUI?.toStringData())
@@ -59,8 +55,7 @@ public class AppSharedRepository {
         return gson.fromJson(json, GradeUI::class.java)
     }
 */
-
-    /*    static public saveUserData(userEntity: CustomerObject){
+        /*    static public saveUserData(userEntity: CustomerObject){
 
             prefsEditor.putString(USER, userEntity.toString())
             prefsEditor.commit()
@@ -69,42 +64,45 @@ public class AppSharedRepository {
             prefsEditor.putString(DRIVER, userEntity.toString())
             prefsEditor.commit()
         }
-*//*
+*/
+        /*
         static public saveUserType(userType :String){
             prefsEditor.putString(USER_TYPE, userType)
             prefsEditor.commit()
         }*/
-
-
-   static public Boolean isDriver( Context context) {
-            SharedPreferences sharedPreferences  = context.getSharedPreferences(
-                    TERLIVE_APP, MODE_PRIVATE);
-            return sharedPreferences.getBoolean(DRIVER, false);
-
-        }
-        static public void setIsDriver(Context context, Boolean isDriver) {
-            SharedPreferences sharedPreferences = context.getSharedPreferences(
-                    TERLIVE_APP, MODE_PRIVATE);
-            SharedPreferences.Editor prefsEditor= sharedPreferences.edit();
-
-            prefsEditor.putBoolean(DRIVER, isDriver);
-            prefsEditor.commit();
-        }
-        static public Boolean hasUserLogin(Context context){
-            SharedPreferences sharedPreferences  = context.getSharedPreferences(
-                    TERLIVE_APP, MODE_PRIVATE);
-            return  sharedPreferences.getBoolean(USER, false);
-
-        }
-         static public void setUserLogin (Context context, Boolean isLogin ){
-            SharedPreferences sharedPreferences = context.getSharedPreferences(
-                    TERLIVE_APP, MODE_PRIVATE);
-             SharedPreferences.Editor prefsEditor  = sharedPreferences.edit();
-            prefsEditor.putBoolean(USER, isLogin);
-            prefsEditor.commit();
+        fun isDriver(context: Context): Boolean {
+            val sharedPreferences = context.getSharedPreferences(
+                TERLIVE_APP, Context.MODE_PRIVATE
+            )
+            return sharedPreferences.getBoolean(DRIVER, false)
         }
 
-/*    static public saveGrades(grades:List<Grade>){
+        fun setIsDriver(context: Context, isDriver: Boolean?) {
+            val sharedPreferences = context.getSharedPreferences(
+                TERLIVE_APP, Context.MODE_PRIVATE
+            )
+            val prefsEditor = sharedPreferences.edit()
+            prefsEditor.putBoolean(DRIVER, isDriver!!)
+            prefsEditor.commit()
+        }
+
+        fun hasUserLogin(context: Context): Boolean {
+            val sharedPreferences = context.getSharedPreferences(
+                TERLIVE_APP, Context.MODE_PRIVATE
+            )
+            return sharedPreferences.getBoolean(USER, false)
+        }
+
+        fun setUserLogin(context: Context, isLogin: Boolean?) {
+            val sharedPreferences = context.getSharedPreferences(
+                TERLIVE_APP, Context.MODE_PRIVATE
+            )
+            val prefsEditor = sharedPreferences.edit()
+            prefsEditor.putBoolean(USER, isLogin!!)
+            prefsEditor.commit()
+        }
+
+        /*    static public saveGrades(grades:List<Grade>){
         prefsEditor.putString(GRADES, grades.toStringData())
         prefsEditor.commit()
     }
@@ -217,24 +215,21 @@ public class AppSharedRepository {
     static public isLogin(): Boolean {
         return sharedPreferences.getString(USER_TYPE, "")?.isNotEmpty()!!
     }*/
-
-        static public void  logOut(Context context) {
-            SharedPreferences sharedPreferences = context.getSharedPreferences(
-                    TERLIVE_APP, MODE_PRIVATE);
-            SharedPreferences.Editor prefsEditor =  sharedPreferences.edit();
-          //  prefsEditor.remove(TOKEN)
-            prefsEditor.remove(USER_TYPE);
-          //  prefsEditor.remove(STUDENT)
-            prefsEditor.remove(USER);
-            prefsEditor.remove(DRIVER);
-       /*     prefsEditor.remove(PORTAL)
+        fun logOut(context: Context) {
+            val sharedPreferences = context.getSharedPreferences(
+                TERLIVE_APP, Context.MODE_PRIVATE
+            )
+            val prefsEditor = sharedPreferences.edit()
+            //  prefsEditor.remove(TOKEN)
+            prefsEditor.remove(USER_TYPE)
+            //  prefsEditor.remove(STUDENT)
+            prefsEditor.remove(USER)
+            prefsEditor.remove(DRIVER)
+            /*     prefsEditor.remove(PORTAL)
             prefsEditor.remove(TOKEN_EXPIRATION_TIME)
             prefsEditor.remove(STUDENTS)
-            prefsEditor.remove(CHILDREN)*/
-            prefsEditor.commit();
-        }
-
-/*
+            prefsEditor.remove(CHILDREN)*/prefsEditor.commit()
+        } /*
     static public saveAccept(accept: Boolean) {
         prefsEditor.putBoolean(ACCEPT, accept)
         prefsEditor.commit()
@@ -266,6 +261,15 @@ public class AppSharedRepository {
         return gson.fromJson(json, type) as List<StudentEntity>?
     }
 */
+    }
+}
 
 
+fun Any.toStringData(): String {
+    return Gson().toJson(this)
+}
+
+
+inline fun <reified T> String.toObject(): T {
+    return Gson().fromJson(this, T::class.java)
 }

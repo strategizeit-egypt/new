@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "716976174239",
+    "project_id": "meshwar-a5965",
+    "storage_bucket": "meshwar-a5965.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:716976174239:android:d1b88dd31e269a74149eaa",
+        "android_client_info": {
+          "package_name": "com.simcoder.uber"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "716976174239-qqifc738d14b726u79k3efjqc5jor4me.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9FAQX8SaqwhgYU9Cl63KLR6WPPMuympk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "716976174239-qqifc738d14b726u79k3efjqc5jor4me.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
