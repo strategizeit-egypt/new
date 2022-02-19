@@ -34,10 +34,10 @@ public class Utils {
         ArrayList<TypeObject> typeArrayList = new ArrayList<>();
 
 
-        typeArrayList.add(new TypeObject("type_1", "Trip 1"/*activity.getResources().getString(R.string.type_1)*/, activity.getResources().getDrawable(R.drawable.ic_type_1), 4));
-        typeArrayList.add(new TypeObject("type_2","Trip 2"/* activity.getResources().getString(R.string.type_2)*/, activity.getResources().getDrawable(R.drawable.ic_type_2), 7));
-        typeArrayList.add(new TypeObject("type_3","Trip 3" /*activity.getResources().getString(R.string.type_3)*/, activity.getResources().getDrawable(R.drawable.ic_type_3), 4));
-        typeArrayList.add(new TypeObject("type_4","Trip 4"/* activity.getResources().getString(R.string.type_4)*/, activity.getResources().getDrawable(R.drawable.ic_type_4), 1));
+        typeArrayList.add(new TypeObject("type_1", "Trip 1 (from 02:00 pm to 04:00 pm)"/*activity.getResources().getString(R.string.type_1)*/, activity.getResources().getDrawable(R.drawable.ic_type_2), 4));
+        typeArrayList.add(new TypeObject("type_2","Trip 2 (from 04:00 pm to 08:00 pm)"/* activity.getResources().getString(R.string.type_2)*/, activity.getResources().getDrawable(R.drawable.ic_type_2), 7));
+        typeArrayList.add(new TypeObject("type_3","Trip 3 (from 08:00 pm to 10:00 pm)" /*activity.getResources().getString(R.string.type_3)*/, activity.getResources().getDrawable(R.drawable.ic_type_2), 4));
+        typeArrayList.add(new TypeObject("type_4","Trip 4 (from 10:00 pm to 12:00 pm)"/* activity.getResources().getString(R.string.type_4)*/, activity.getResources().getDrawable(R.drawable.ic_type_2), 1));
 
         return  typeArrayList;
     }

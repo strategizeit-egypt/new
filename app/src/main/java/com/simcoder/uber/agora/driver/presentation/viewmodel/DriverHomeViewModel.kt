@@ -15,29 +15,31 @@ import timber.log.Timber
 
 class DriverHomeViewModel : BaseViewModel() {
 
-     val repo: DriverRepo = AppModule.provideDriverRepoImp()
+    val repo: DriverRepo = AppModule.provideDriverRepoImp()
+
     @SuppressLint("StaticFieldLeak")
     private val gps = AppModule.getGps()
+    var token: String? = null
 
     //}
     val endingEvent by lazy { MutableLiveData<Boolean>() }
-/*    val path = mutableListOf<LatLng>().apply {
-        add(LatLng(27.962065, 34.362704))
-        add(LatLng(27.967305,  34.362942))
-        add(LatLng(27.985617,  34.390607))
-        add(LatLng(27.989030,  34.395927))
-        add(LatLng(28.000747,  34.408668))
-        add(LatLng(28.006564, 34.412656))
-        add(LatLng(28.009040, 34.417683))
-        add(LatLng(28.008582, 34.427860))
-    }*/
-    val toastEvent =MutableLiveData<String>()
-    val currentLocationUpdates =MutableLiveData<BusLocationParam>()
-    val tripLocation =MutableLiveData<Pair<BusLocationParam, BusLocationParam>>()
+
+    /*    val path = mutableListOf<LatLng>().apply {
+            add(LatLng(27.962065, 34.362704))
+            add(LatLng(27.967305,  34.362942))
+            add(LatLng(27.985617,  34.390607))
+            add(LatLng(27.989030,  34.395927))
+            add(LatLng(28.000747,  34.408668))
+            add(LatLng(28.006564, 34.412656))
+            add(LatLng(28.009040, 34.417683))
+            add(LatLng(28.008582, 34.427860))
+        }*/
+    val toastEvent = MutableLiveData<String>()
+    val currentLocationUpdates = MutableLiveData<BusLocationParam>()
+    val tripLocation = MutableLiveData<Pair<BusLocationParam, BusLocationParam>>()
 
 
     fun loginAndSendLocation(token: String) {
-
         repo.connectWithCurrentTrip("driver", token)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -46,8 +48,8 @@ class DriverHomeViewModel : BaseViewModel() {
                 sendBusLocation()
                 observeOnBusStatus()
                 toastEvent.value = "Login success"
-       /*         Toast.makeText(MeshwarApplication.instance!!, "Login success", Toast.LENGTH_LONG)
-                    .show()*/
+                /*         Toast.makeText(MeshwarApplication.instance!!, "Login success", Toast.LENGTH_LONG)
+                             .show()*/
 
             }, {}).addTo(compositeDisposable)
     }
@@ -60,7 +62,7 @@ class DriverHomeViewModel : BaseViewModel() {
             .retry(3)
             .subscribe({
                 toastEvent.value = "Login Success"
-            //    Toast.makeText(MeshwarApplication.instance!!, "Login success", Toast.LENGTH_LONG).show()
+                //    Toast.makeText(MeshwarApplication.instance!!, "Login success", Toast.LENGTH_LONG).show()
                 observeBusLocation()
                 observeOnBusConnection()
 
@@ -69,34 +71,35 @@ class DriverHomeViewModel : BaseViewModel() {
 
     private fun observeBusLocation() {
         repo.observeOnBusLocation()
-
-                        .subscribeOn(Schedulers.io())
+            .retry()
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+
             .subscribe({
-                if (  endingEvent.value != true){
+                if (endingEvent.value != true) {
                     if (it.action == MessageAction.LOCATION.action)
                         currentLocationUpdates.value = it.data.toObject<BusLocationParam>()
-                    else if (it.action == MessageAction.START_TRIP.action){
-                        tripLocation.value = it.data.toObject<List<BusLocationParam>>().let {
-                            Pair(it.first(), it[1])
-                        }
+                    else if (it.action == MessageAction.START_TRIP.action) {
+                    /*    tripLocation.value = it.data.toObject<List<BusLocationParam>>().let {
+                            it
+                            Pair(BusLocationParam(it.first().lat, it.first().lng), BusLocationParam(it[1].lat, it[1].lng))
+                        }*/
                         toastEvent.value = "Trip Started"
-                    }
-                    else if (it.action == MessageAction.END_TRIP.action){
+                    } else if (it.action == MessageAction.END_TRIP.action) {
                         toastEvent.value = "Trip Ended"
                         endingEvent.value = true
                     }
 
                 }
-           //     Toast.makeText(MeshwarApplication.instance!!, it, Toast.LENGTH_LONG).show()
+                //     Toast.makeText(MeshwarApplication.instance!!, it, Toast.LENGTH_LONG).show()
             }, {
                 toastEvent.value = "observeBusLocation error"
                 Log.e("errrrrrr", it.toString())
-     /*           Toast.makeText(
-                    MeshwarApplication.instance!!,
-                    "observeBusLocation error",
-                    Toast.LENGTH_LONG
-                ).show()*/
+                /*           Toast.makeText(
+                               MeshwarApplication.instance!!,
+                               "observeBusLocation error",
+                               Toast.LENGTH_LONG
+                           ).show()*/
             })
             .addTo(compositeDisposable)
     }
@@ -107,12 +110,17 @@ class DriverHomeViewModel : BaseViewModel() {
         gps.locationPublisher.subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                if (  endingEvent.value != true){
-                currentLocationUpdates.value = BusLocationParam(it.latitude, it.longitude)
-                sendM(MessageModel(MessageAction.LOCATION.action,BusLocationParam(it.latitude, it.longitude).toStringData() )
-                    .toStringData())
+                if (endingEvent.value != true) {
+                    currentLocationUpdates.value = BusLocationParam(it.latitude, it.longitude)
+                    sendM(
+                        MessageModel(
+                            MessageAction.LOCATION.action,
+                            BusLocationParam(it.latitude, it.longitude).toStringData()
+                        )
+                            .toStringData()
+                    )
                 }
-            },{})
+            }, {})
             .addTo(compositeDisposable)
 /*        repo.startObservingLocation().subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -130,42 +138,42 @@ class DriverHomeViewModel : BaseViewModel() {
             .addTo(compositeDisposable)*/
     }
 
-    fun sendM(msg:String){
-        if (  endingEvent.value != true){
-        repo.send(msg )
-            .subscribeOn(Schedulers.io())
-            .subscribe({}, {
-                Timber.d("dddd $it")
-            })
-            .addTo(compositeDisposable)
+    fun sendM(msg: String) {
+        if (endingEvent.value != true) {
+            repo.send(msg)
+                .subscribeOn(Schedulers.io())
+                .subscribe({}, {
+                    Timber.d("dddd $it")
+                })
+                .addTo(compositeDisposable)
         }
     }
 
     fun observeOnBusStatus() {
         repo.observeOnConnection()
-                        .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                if (  endingEvent.value != true){
-                when (it) {
-                    ABORTED -> {
-                        toastEvent.value = "Aborted"
-                        //Toast.makeText(MeshwarApplication.instance!!, "aborted", Toast.LENGTH_LONG).show()
-                        endTrip()
+                if (endingEvent.value != true) {
+                    when (it) {
+                        ABORTED -> {
+                            toastEvent.value = "Aborted"
+                            //Toast.makeText(MeshwarApplication.instance!!, "aborted", Toast.LENGTH_LONG).show()
+                            endTrip()
+                        }
+                        CONNECTED ->
+                            toastEvent.value = "Connected"
+
+                        //  Toast.makeText(MeshwarApplication.instance!!, "connected", Toast.LENGTH_LONG).show()
+                        DISCONNECTED ->
+                            toastEvent.value = "Disconected"
+
+                        //    Toast.makeText(MeshwarApplication.instance!!, "Disconnected", Toast.LENGTH_LONG).show()
+                        RECONNECTING ->
+                            toastEvent.value = "Reconected"
+
+                        //  Toast.makeText(MeshwarApplication.instance!!, "Reconnected", Toast.LENGTH_LONG).show()
                     }
-                    CONNECTED ->
-                        toastEvent.value = "Connected"
-
-                  //  Toast.makeText(MeshwarApplication.instance!!, "connected", Toast.LENGTH_LONG).show()
-                    DISCONNECTED ->
-                        toastEvent.value = "Disconected"
-
-                //    Toast.makeText(MeshwarApplication.instance!!, "Disconnected", Toast.LENGTH_LONG).show()
-                    RECONNECTING ->
-                        toastEvent.value = "Reconected"
-
-                  //  Toast.makeText(MeshwarApplication.instance!!, "Reconnected", Toast.LENGTH_LONG).show()
-                }
                 }
 
             }, {})
@@ -174,18 +182,18 @@ class DriverHomeViewModel : BaseViewModel() {
 
     fun observeOnBusConnection() {
         repo.getBusConnectionStatus("2882341275")
-                        .subscribeOn(Schedulers.io())
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                if (  endingEvent.value != true){
-                if (!it)
-                    toastEvent.value = "no connection Bus"
-                  //      Toast.makeText(MeshwarApplication.instance!!, "no connection Bus", Toast.LENGTH_LONG).show()
+                if (endingEvent.value != true) {
+                    if (!it)
+                        toastEvent.value = "no connection Bus"
+                    //      Toast.makeText(MeshwarApplication.instance!!, "no connection Bus", Toast.LENGTH_LONG).show()
                     else
-                toastEvent.value = "no connected  Bus"
-              //      Toast.makeText(MeshwarApplication.instance!!, "connected Bus", Toast.LENGTH_LONG).show()
-            }
-                       }, {})
+                        toastEvent.value = "no connected  Bus"
+                    //      Toast.makeText(MeshwarApplication.instance!!, "connected Bus", Toast.LENGTH_LONG).show()
+                }
+            }, {})
             .addTo(compositeDisposable)
     }
 
@@ -201,13 +209,13 @@ class DriverHomeViewModel : BaseViewModel() {
     }
 
     val routeRes = MutableLiveData<MutableList<LatLng>>()
-    fun getRouteBetweenToPoints(key:String ,location :LatLng , destination :LatLng){
+    fun getRouteBetweenToPoints(key: String, location: LatLng, destination: LatLng) {
         repo.getPointsList(key, location, destination)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
                 routeRes.value = it
-            },{
+            }, {
                 Timber.d(it)
             })
             .addTo(compositeDisposable)

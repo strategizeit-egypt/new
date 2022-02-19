@@ -118,7 +118,6 @@ class DriverMap1Activity : AppCompatActivity(), NavigationView.OnNavigationItemS
         override fun onCreate(savedInstanceState: Bundle?) {
             super.onCreate(savedInstanceState)
             setContentView(R.layout.activity_map_driver)
-            checkForTokens()
             val toolbar = findViewById<Toolbar>(R.id.toolbar)
             polylines = ArrayList()
             val drawer = findViewById<DrawerLayout>(R.id.drawer_layout)
@@ -404,11 +403,11 @@ class DriverMap1Activity : AppCompatActivity(), NavigationView.OnNavigationItemS
                         .anchor(0.5f, 1f)
                         .icon(bitmapDescriptorFromVector(this, R.drawable.ic_car))
                 ).apply { tag = "bus" }
-                //   mMap!!.moveCameraLocation(latLng)
-                if (!isCameraUpdatedBefore)
+                   mMap!!.moveCameraLocation(latLng)
+        /*        if (!isCameraUpdatedBefore)
                     mMap!!.moveCameraLocation(latLng)
                 isCameraUpdatedBefore = true
-
+*/
 
             }
         }

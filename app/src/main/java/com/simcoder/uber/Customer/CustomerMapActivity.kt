@@ -61,9 +61,11 @@ import com.simcoder.uber.R
 import com.simcoder.uber.Utils.Utils
 import com.simcoder.uber.agora.driver.presentation.viewmodel.DriverHomeViewModel
 import com.simcoder.uber.bitmapDescriptorFromVector
+import com.simcoder.uber.moveCameraLocation
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
+import timber.log.Timber
 import java.io.IOException
 import java.util.*
 
@@ -300,10 +302,15 @@ class CustomerMapActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                         .anchor(0.5f, 1f)
                         .icon(bitmapDescriptorFromVector(this, R.drawable.ic_location_on_grey_24dp))
                 ).apply { tag = "des" }
+
+                mMap!!.moveCameraLocation(LatLng(pair.first.lat,pair.first.lng ))
+
             }
         }
         viewModel.currentLocationUpdates.observe(this){param ->
+            Timber.d("Ccccccccccc")
             mMap?.let {
+                Timber.d("Cccccccc $param")
                 currentMarker?.remove()
                 currentMarker = mMap!!.addMarker(
                     MarkerOptions()
@@ -311,6 +318,7 @@ class CustomerMapActivity : AppCompatActivity(), NavigationView.OnNavigationItem
                         .anchor(0.5f, 1f)
                         .icon(bitmapDescriptorFromVector(this, R.drawable.ic_car))
                 ).apply { tag = "curren" }
+                mMap!!.moveCameraLocation(LatLng(param.lat,param.lng ))
             }
         }
         viewModel.endingEvent.observe(this){

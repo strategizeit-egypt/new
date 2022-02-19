@@ -4,3 +4,8 @@ data class MessageModel(
     val action :Int,
     val data :String
 )
+
+data class BusLocationParam(
+    val lat :Double,
+    val lng :Double
+)

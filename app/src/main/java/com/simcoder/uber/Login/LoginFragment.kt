@@ -82,7 +82,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
             return
         }
         //   AppSharedRepository.setIsDriver(getContext(), false);
-        val intent = Intent(activity, CustomerMapActivity::class.java)
+        val intent = Intent(activity, DriverMap1Activity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         startActivity(intent)
         requireActivity().finish()

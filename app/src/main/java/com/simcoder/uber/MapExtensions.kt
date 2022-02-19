@@ -16,10 +16,10 @@ private fun LatLng.isCoordinatesValid(): Boolean {
     return latitude >= -90 && latitude <= 90 && longitude >= -180 && longitude <= 180;
 }
 
-fun GoogleMap.animateCameraLocation(latLng: LatLng, zoomRatio: Float = 12f) {
+fun GoogleMap.animateCameraLocation(latLng: LatLng, zoomRatio: Float = 16f) {
     this.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomRatio))
 }
-fun GoogleMap.moveCameraLocation(latLng: LatLng, zoomRatio: Float = 12f) {
+fun GoogleMap.moveCameraLocation(latLng: LatLng, zoomRatio: Float = 16f) {
     this.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoomRatio))
 
 }
@@ -94,11 +94,11 @@ fun bitmapDescriptorFromVector(
 ): BitmapDescriptor {
     val background = ContextCompat.getDrawable(context, res)!!
     //  background.setBounds(0, 0, background.intrinsicWidth, background.intrinsicHeight)
-    background.setBounds(0, 0, 100, 100)
+    background.setBounds(0, 0, 120, 120)
     val bitmap = background.intrinsicHeight.let {
         Bitmap.createBitmap(
-            100,
-            100,
+            120,
+            120,
             Bitmap.Config.ARGB_8888
         )
     }

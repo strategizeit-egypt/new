@@ -206,13 +206,13 @@ class GpsTracker11 : Service(), LocationListener {
         /**
          * min distance change to get location update
          */
-        private val MIN_DISTANCE_CHANGE_FOR_UPDATE: Float = 10f
+        private val MIN_DISTANCE_CHANGE_FOR_UPDATE: Float = 50f
 
         /**
          * min time for location update
          * 60000 = 1min
          */
-        private val MIN_TIME_FOR_UPDATE: Long = 5000
+        private val MIN_TIME_FOR_UPDATE: Long = 30000
     }
 
 }
